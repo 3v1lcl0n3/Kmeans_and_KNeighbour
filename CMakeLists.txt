@@ -1,9 +1,7 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
-# and include sub-projects here.
-#
-cmake_minimum_required (VERSION 3.8)
-
-project ("Kmean_Kneighbour")
-
-# Include sub-projects.
-add_subdirectory ("Kmean_Kneighbour")
+project(Kmeans_Kneighbour)
+cmake_minimum_required(VERSION 2.8)
+set(CMAKE_CXX_STANDARD 11)
+aux_source_directory(. SRC_LIST)
+add_executable(${PROJECT_NAME} ${SRC_LIST})
+add_library(CsvRW STATIC csvrw.cpp csvrw.h pointvector.h kmeans.cpp kmeans.h knearest.cpp knearest.h)
+target_link_libraries(${PROJECT_NAME} CsvRW)
