@@ -1,0 +1,5 @@
+C:/Users/Karlo/source/repos/Kmean_Kneighbour/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Karlo/source/repos/Kmean_Kneighbour/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Karlo/source/repos/Kmean_Kneighbour/out/build/x64-Debug/Kmean_Kneighbour/CMakeFiles/Kmean_Kneighbour.dir
+C:/Users/Karlo/source/repos/Kmean_Kneighbour/out/build/x64-Debug/Kmean_Kneighbour/CMakeFiles/edit_cache.dir
+C:/Users/Karlo/source/repos/Kmean_Kneighbour/out/build/x64-Debug/Kmean_Kneighbour/CMakeFiles/rebuild_cache.dir
