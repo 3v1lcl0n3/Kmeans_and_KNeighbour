@@ -7,7 +7,7 @@ CsvRW::~CsvRW(){}
 std::vector<Point> CsvRW::readcsv() {
     std::vector<Point> points; //vektor točaka
     std::string line;
-    std::ifstream file("mall_data.csv");
+    std::ifstream file("data/mall_data.csv");
 
     while (getline(file, line)) {
         std::stringstream lineStream(line);
@@ -28,7 +28,10 @@ std::vector<Point> CsvRW::readcsv() {
 void CsvRW::writecsv(std::vector<Point> points) {
 
     std::ofstream myfile;
-    myfile.open("output.csv");
+    std::string text;
+    std::cout << "Upišite ime datoteke za ispis točaka i njihovih klasifikacija: " << std::endl;
+    std::getline (std::cin, text);
+    myfile.open("data/" + text + ".csv");
     myfile << "x,y,c" << std::endl;
     for (std::vector<Point>::iterator it = points.begin(); it != points.end();
         ++it) {
