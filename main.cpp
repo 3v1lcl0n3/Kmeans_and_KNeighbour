@@ -3,14 +3,6 @@
 #include "kmeans.h"
 #include "knearest.h"
 
-#include <ctime>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <algorithm>
-#include <string>
-
 using namespace std;
 
 int main() {
@@ -48,7 +40,7 @@ int main() {
     KNearest KNalg;
 
     int k = 21;
-    printf("Tocka na lokaciji %lf,%lf "" pripada clusteru %d.\n", unknown.x, unknown.y, KNalg.classifyAPoint(&points, k, best_cluster_number, unknown)); //3. DIO K MEANS NEIGHBOR
+    printf("Tocka na lokaciji %.0lf,%.0lf "" pripada clusteru %d.\n", unknown.x, unknown.y, KNalg.classifyAPoint(&points, k, best_cluster_number, unknown)); //3. DIO K MEANS NEIGHBOR
     return 0;
 
 }

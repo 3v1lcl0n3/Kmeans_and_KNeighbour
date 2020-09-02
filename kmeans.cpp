@@ -1,4 +1,5 @@
 #include "kmeans.h"
+#include <iterator>
 
 KMeans::KMeans(){}
 KMeans::~KMeans(){}
@@ -7,6 +8,7 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
     int n = points->size();
 
     vector<Point> centroids; //vektor centroida
+    centroids.clear();
     srand(time(0));
     for (int i = 0; i < k; ++i) {
         centroids.push_back(points->at(rand() % n)); // nasumično daj broj svakoj centroidi
@@ -16,18 +18,16 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
         //za svaku centroidu izračunaj udaljenost od točke i obnovi kluster točke
         for (vector<Point>::iterator c = centroids.begin(); c != centroids.end(); //iteriranje po vektoru ceontroida
             ++c) {
-            int clusterId = c - centroids.begin();
-
-            for (vector<Point>::iterator it = points->begin(); //iteriranje po vektoru točaka
-                it != points->end(); ++it) {
-                Point p = *it;
-                double dist = c->distance(p); //udaljenost trenutnog centroida od točke
-                if (dist < p.minDist) { //ako je udaljenost manja od trenutne udaljenosti onda ->
-                    p.minDist = dist;  //postavi tu udaljenost na trenutnu
-                    p.cluster = clusterId; //  i obnovi Id clustera za tu točku
-
+            int clusterId = k - distance(c,centroids.end());
+            //int clusterId = c - centroids.begin();
+            //cout << clusterId << endl;
+            for(Point& pt : *points){
+                double dist = c->distance(pt); //udaljenost trenutnog centroida od točke
+                if (dist < pt.minDist) { //ako je udaljenost manja od trenutne udaljenosti onda ->
+                    pt.minDist = dist;  //postavi tu udaljenost na trenutnu
+                    pt.cluster = clusterId; //  i obnovi Id clustera za tu točku
                 }
-                *it = p;
+
             }
         }
 
@@ -42,26 +42,26 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
         }
 
         // iterirator po točkama da se dobiju podaci za račun pozicijecentroida
-        for (vector<Point>::iterator it = points->begin(); it != points->end();
-            ++it) {
-            int clusterId = it->cluster; //pročitaj cluster točke
+        for(Point& pt : *points) {
+            int clusterId = pt.cluster; //pročitaj cluster točke
             nPoints[clusterId] += 1; //dodaj točku u specifički kluster
-            sumX[clusterId] += it->x; //povećaj sumu x-eva za određeni cluster
-            sumY[clusterId] += it->y; // povećaj sumu y
+            sumX[clusterId] += pt.x; //povećaj sumu x-eva za određeni cluster
+            sumY[clusterId] += pt.y; // povećaj sumu y
 
-            it->minDist = __DBL_MAX__;  //resetira udaljenost
+            pt.minDist = __DBL_MAX__;  //resetira udaljenost
         }
+
         // računanje novih centroida,iterator po vektoru centroida
         for (vector<Point>::iterator c = centroids.begin(); c != centroids.end();
             ++c) {
             int clusterId = c - centroids.begin();
+
             c->x = sumX[clusterId] / nPoints[clusterId]; //pozicija na x ordinati za specificni centroid(suma X u nekom clusteru podijeljena s brojem točaka u clusteru)
             c->y = sumY[clusterId] / nPoints[clusterId]; //isto samo za y
         }
 
 
     }
-
 
 
     //AVG udaljenost od centroida, za računanje bodova za određeni broj clustera (elbow metoda)
@@ -71,15 +71,12 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
         ++c) {
         int clusterId = c - centroids.begin();
         //iterator po točkama
-        for (vector<Point>::iterator it = points->begin();
-            it != points->end(); ++it) {
-            Point p = *it;
+        for(Point& pt : *points) {
             //samo uzimaj uzimaju u obzir udaljenosti točaka od njihovih centroida
-            if (p.cluster == clusterId) {
-                double dist = c->distance(p);
+            if (pt.cluster == clusterId) {
+                double dist = c->distance(pt);
                 mean_val += dist;  // suma svih udaljenosti
             }
-            *it = p;
         }
     }
     mean_val /= n; //average svih udaljenosti
