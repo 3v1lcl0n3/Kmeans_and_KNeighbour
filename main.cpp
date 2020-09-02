@@ -3,26 +3,19 @@
 #include "kmeans.h"
 #include "knearest.h"
 
-using namespace std;
-
 int main() {
 
     CsvRW csv_handler;
-    vector<Point> points = csv_handler.readcsv();
-
-    int cluster_test = 8;
-    vector<double> arr(cluster_test);
-
     KMeans KMalg;
-    // pokrene K means algoritam podešeni broj puta da dobijemo optimalan broj za K elbow metodom
-    for (int i = 1; i <= cluster_test; i++) {
-        arr[i - 1] = KMalg.kMeansClustering(&points, 100, i);
-    }
+    KNearest KNalg;
+    std::vector<Point> points = csv_handler.readcsv();
+    int cluster_test = 8; // broj clustera od 1 do zadanog broja za koje ćemo testirati dataset
+    int k = 21; // Parametar K govori koliko ćemo točaka oko odabrane uzeti u obzir za K nearest neighbor
 
+    // pokrene K means algoritam podešeni broj puta da dobijemo optimalan broj za K elbow metodom
     //ispis polja average udaljenosti od centroida za 1-8 K
-    cout << "Average udaljenosti tocaka od svojih centroida: " << endl;
-    for (int i = 0; i < cluster_test; i++) {
-        cout << arr[i] << endl;
+    for (int i = 1; i <= cluster_test; i++) {
+        std::cout << KMalg.kMeansClustering(&points, 100, i) << std::endl;
     }
 
     //najbolji broj klastera
@@ -36,10 +29,7 @@ int main() {
     Point unknown;
     unknown.x = 37;
     unknown.y = 65;
-    // Parametar K govori koliko ćemo točaka oko odabrane uzeti u obzir za K nearest neighbor
-    KNearest KNalg;
 
-    int k = 21;
     printf("Tocka na lokaciji %.0lf,%.0lf "" pripada clusteru %d.\n", unknown.x, unknown.y, KNalg.classifyAPoint(&points, k, best_cluster_number, unknown)); //3. DIO K MEANS NEIGHBOR
     return 0;
 

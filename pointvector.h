@@ -1,8 +1,6 @@
 #ifndef POINTVECTOR_H
 #define POINTVECTOR_H
 
-//namespace pointvector{
-
 struct Point {
     double x, y;     // koordinate
     int cluster;     // kluster kojemu pripada točka
@@ -15,7 +13,5 @@ struct Point {
         return (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y); // kvadrat udaljenosti do točke
     }
 };
-
-//}
 
 #endif

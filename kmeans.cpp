@@ -4,10 +4,10 @@
 KMeans::KMeans(){}
 KMeans::~KMeans(){}
 
-double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
+double KMeans::kMeansClustering(std::vector<Point>* points, int epochs, int k) {
     int n = points->size();
 
-    vector<Point> centroids; //vektor centroida
+    std::vector<Point> centroids; //vektor centroida
     centroids.clear();
     srand(time(0));
     for (int i = 0; i < k; ++i) {
@@ -16,7 +16,7 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
 
     for (int i = 0; i < epochs; ++i) {
         //za svaku centroidu izračunaj udaljenost od točke i obnovi kluster točke
-        for (vector<Point>::iterator c = centroids.begin(); c != centroids.end(); //iteriranje po vektoru ceontroida
+        for (std::vector<Point>::iterator c = centroids.begin(); c != centroids.end(); //iteriranje po vektoru ceontroida
             ++c) {
             int clusterId = k - distance(c,centroids.end());
             //int clusterId = c - centroids.begin();
@@ -32,8 +32,8 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
         }
 
         //dodatni vektori za računanje mean-a
-        vector<int> nPoints;
-        vector<double> sumX, sumY;
+        std::vector<int> nPoints;
+        std::vector<double> sumX, sumY;
         //postavljanje inicijalnih vrijednosti
         for (int j = 0; j < k; ++j) {
             nPoints.push_back(0);
@@ -52,24 +52,21 @@ double KMeans::kMeansClustering(vector<Point>* points, int epochs, int k) {
         }
 
         // računanje novih centroida,iterator po vektoru centroida
-        for (vector<Point>::iterator c = centroids.begin(); c != centroids.end();
+        for (std::vector<Point>::iterator c = centroids.begin(); c != centroids.end();
             ++c) {
-            int clusterId = c - centroids.begin();
+            int clusterId = k - distance(c,centroids.end());
 
             c->x = sumX[clusterId] / nPoints[clusterId]; //pozicija na x ordinati za specificni centroid(suma X u nekom clusteru podijeljena s brojem točaka u clusteru)
             c->y = sumY[clusterId] / nPoints[clusterId]; //isto samo za y
         }
-
-
     }
-
 
     //AVG udaljenost od centroida, za računanje bodova za određeni broj clustera (elbow metoda)
     double mean_val = 0;
     //iterator po centroidima
-    for (vector<Point>::iterator c = centroids.begin(); c != centroids.end();
+    for (std::vector<Point>::iterator c = centroids.begin(); c != centroids.end();
         ++c) {
-        int clusterId = c - centroids.begin();
+        int clusterId = k - distance(c,centroids.end());
         //iterator po točkama
         for(Point& pt : *points) {
             //samo uzimaj uzimaju u obzir udaljenosti točaka od njihovih centroida

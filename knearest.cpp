@@ -12,7 +12,7 @@ double comparison(Point a, Point b){
 }
 
 //funkcija za k-nearest neighbor
-int KNearest::classifyAPoint(vector<Point>* points, int k, int cluster_nr, Point unknown)
+int KNearest::classifyAPoint(std::vector<Point>* points, int k, int cluster_nr, Point unknown)
 {
     //int n = points->size();
     //napuni vektor s sa svim točkama i udaljenosti od nove točke
@@ -25,7 +25,7 @@ int KNearest::classifyAPoint(vector<Point>* points, int k, int cluster_nr, Point
     //funkcija za sortiranje točaka od najmanje do najveće udaljenosti od nove točke
     sort(points->begin(),points->end(),comparison);
 
-    vector<int> freq(k);
+    std::vector<int> freq(k);
 
     //puni vektor frekvencija ovisno o K, tako da broji frekvencije K nabližih točaka od tražene
     int counter = 0;
