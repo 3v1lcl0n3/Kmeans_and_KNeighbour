@@ -2,8 +2,10 @@
 #include "pointvector.h"
 #include "kmeans.h"
 #include "knearest.h"
+#include "draw_clusters.h"
 
-int main() {
+int main(int iArgc, char** cppArgv) {
+
 
     CsvRW csv_handler;
     KMeans KMalg;
@@ -21,6 +23,10 @@ int main() {
     //najbolji broj klastera
     int best_cluster_number = 5;
     KMalg.kMeansClustering(&points, 100, best_cluster_number);
+
+    //grafički prikaz, treba ga još malo uredit u bolje ukomponirat
+    Draw_Clusters draw;
+    draw.paint_up(iArgc, cppArgv,&points);
 
     // ispis u .csv
     csv_handler.writecsv(points);

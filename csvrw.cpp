@@ -23,8 +23,6 @@ std::vector<Point> CsvRW::readcsv() {
     return points;
 }
 
-
-
 void CsvRW::writecsv(std::vector<Point> points) {
 
     std::ofstream myfile;
